@@ -1,0 +1,25 @@
+name: WhatsApp Data Capture
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'  # Cada 2 horas
+  workflow_dispatch:       # Permitir ejecución manual
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Descargar código
+      uses: actions/checkout@v3
+    
+    - name: ⚙️ Configurar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: 📦 Instalar dependencias
+      run: npm install
+    
+    - name: 🚀 Ejecutar captura
+      run: node capture.js

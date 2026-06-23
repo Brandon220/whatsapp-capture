@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  openwa-api:
+    image: ghcr.io/rmyndharis/openwa:latest
+    container_name: openwa-mongodb
+    ports:
+      - "2785:2785"
+    environment:
+      - DB_TYPE=mongodb
+      - DB_URL=mongodb+srv://brandongarcia20052312_db_user:5IBioCdw2RUWkEg3@cluster0.xauxee.w.mongodb.net/openwa?appName=Cluster0
+      - NODE_ENV=production
+      - LOG_LEVEL=info
+    volumes:
+      - openwa-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  openwa-data:
