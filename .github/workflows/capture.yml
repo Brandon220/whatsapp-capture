@@ -3,7 +3,7 @@ name: WhatsApp Data Capture
 on:
   schedule:
     - cron: '0 */2 * * *'  # Cada 2 horas
-  workflow_dispatch:       # Permitir ejecución manual
+  workflow_dispatch:
 
 jobs:
   capture:
@@ -11,12 +11,12 @@ jobs:
     
     steps:
     - name: 📥 Descargar código
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # ← Cambiado a v4 (más reciente)
     
     - name: ⚙️ Configurar Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4  # ← Cambiado a v4
       with:
-        node-version: '18'
+        node-version: '22'  # ← Cambiado a Node.js 22 (más estable)
     
     - name: 📦 Instalar dependencias
       run: npm install
