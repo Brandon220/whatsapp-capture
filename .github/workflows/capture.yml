@@ -2,18 +2,19 @@ name: WhatsApp Data Capture
 
 on:
   schedule:
-    - cron: '0 */2 * * *'  # Cada 2 horas
+    - cron: '0 */2 * * *'
   workflow_dispatch:
 
 jobs:
   capture:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read  # Permiso necesario para clonar el repositorio
     
     steps:
     - name: 📥 Descargar código
       uses: actions/checkout@v4
-      with:
-        token: ${{ secrets.PAT_TOKEN }}
+      # No es necesario especificar token para repositorios públicos
     
     - name: ⚙️ Configurar Node.js
       uses: actions/setup-node@v4
