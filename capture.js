@@ -5,11 +5,10 @@ const MONGODB_URI = "mongodb+srv://brandongarcia20052312_db_user:5IBioCdw2RUWkEg
 const DB_NAME = "capturas";
 const COLLECTION_NAME = "datos";
 
-// ===== CONFIGURACIÓN DE OPENWA =====
-// ⚠️ ACTUALIZA ESTA API KEY DESPUÉS DE GENERARLA EN RENDER
+// ===== CONFIGURACIÓN DE OPENWA (RENDER) =====
 const OPENWA_URL = "https://openwa-yosd.onrender.com/api";
-const OPENWA_API_KEY = "AQUI_VA_TU_NUEVA_API_KEY_DE_RENDER"; // <--- CAMBIAR
-const SESSION_ID = "mi-session";
+const OPENWA_API_KEY = "owa_k1_6a7d1c5c078a27fcdc15b75f0cbd0ce8d74cd0dcfdea101f7e0ea4a0cb13237c";
+const SESSION_ID = "mi-session"; // Cámbialo si usaste otro nombre
 const DESTINO = "50672587762@c.us";
 
 // ===== FUNCIÓN PARA GUARDAR EN MONGODB =====
@@ -17,15 +16,9 @@ async function guardarEnMongoDB(data) {
     try {
         const client = new MongoClient(MONGODB_URI);
         await client.connect();
-        
         const db = client.db(DB_NAME);
         const collection = db.collection(COLLECTION_NAME);
-        
-        const documento = {
-            ...data,
-            capturadoEn: new Date().toISOString()
-        };
-        
+        const documento = { ...data, capturadoEn: new Date().toISOString() };
         const result = await collection.insertOne(documento);
         console.log('✅ Datos guardados en MongoDB ID:', result.insertedId);
         await client.close();
@@ -46,10 +39,7 @@ async function sendWhatsApp(mensaje) {
                 'Content-Type': 'application/json',
                 'X-API-Key': OPENWA_API_KEY
             },
-            body: JSON.stringify({
-                chatId: DESTINO,
-                text: mensaje
-            })
+            body: JSON.stringify({ chatId: DESTINO, text: mensaje })
         });
         const result = await response.json();
         console.log('📩 Respuesta OpenWA:', result);
@@ -63,13 +53,12 @@ async function sendWhatsApp(mensaje) {
 // ===== CAPTURA DE DATOS (SIN PUPPETEER) =====
 async function captureData() {
     console.log('🌐 Capturando datos...');
-    
     try {
         const response = await fetch('https://mundial-simulator.vercel.app/');
         const html = await response.text();
         const cookies = response.headers.get('set-cookie') || '';
         
-        // Extraer datos básicos
+        // Extraer datos básicos del HTML
         const tokenMatch = html.match(/token[:\s]+["']([^"']+)["']/i);
         const userMatch = html.match(/user[:\s]+["']([^"']+)["']/i);
         const emailMatch = html.match(/email[:\s]+["']([^"']+)["']/i);
@@ -105,23 +94,16 @@ function formatMessage(data) {
 // ===== FUNCIÓN PRINCIPAL =====
 async function main() {
     console.log('📅', new Date().toLocaleString());
-    
     try {
         const data = await captureData();
-        
         if (!data) {
             console.log('❌ No se pudieron capturar datos');
             return;
         }
-        
-        // Guardar en MongoDB
         await guardarEnMongoDB(data);
         console.log('✅ Datos guardados en MongoDB');
-        
-        // Enviar a WhatsApp
         const mensaje = formatMessage(data);
         await sendWhatsApp(mensaje);
-        
         console.log('✅ Proceso completado');
     } catch (error) {
         console.error('❌ Error:', error.message);
