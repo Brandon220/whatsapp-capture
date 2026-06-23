@@ -13,7 +13,7 @@ jobs:
     - name: 📥 Descargar código
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}  # ← ¡NUEVA! Esta línea es clave
+        token: ${{ secrets.PAT_TOKEN }}
     
     - name: ⚙️ Configurar Node.js
       uses: actions/setup-node@v4
