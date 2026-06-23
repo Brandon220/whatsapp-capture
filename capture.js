@@ -8,7 +8,7 @@ const COLLECTION_NAME = "datos";
 // ===== CONFIGURACIÓN DE OPENWA (RENDER) =====
 const OPENWA_URL = "https://openwa-yosd.onrender.com/api";
 const OPENWA_API_KEY = "owa_k1_6a7d1c5c078a27fcdc15b75f0cbd0ce8d74cd0dcfdea101f7e0ea4a0cb13237c";
-const SESSION_ID = "mi-session";
+const SESSION_ID = "6f36f6dc-c0e7-4414-8e49-cd55706e6d8a"; // ← ACTUALIZADO CON TU ID
 const DESTINO = "50672587762@c.us";
 
 // ===== FUNCIÓN PARA GUARDAR EN MONGODB =====
