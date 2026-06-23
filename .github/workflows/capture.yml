@@ -11,12 +11,14 @@ jobs:
     
     steps:
     - name: 📥 Descargar código
-      uses: actions/checkout@v4  # ← Cambiado a v4 (más reciente)
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}  # ← ¡NUEVA! Esta línea es clave
     
     - name: ⚙️ Configurar Node.js
-      uses: actions/setup-node@v4  # ← Cambiado a v4
+      uses: actions/setup-node@v4
       with:
-        node-version: '22'  # ← Cambiado a Node.js 22 (más estable)
+        node-version: '22'
     
     - name: 📦 Instalar dependencias
       run: npm install
